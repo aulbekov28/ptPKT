@@ -5,7 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Events\ToDoItemCompletedEvent.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Events\ToDoItemCompletedEvent.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ptPKT.SharedKernel\ptPKT.SharedKernel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.Identity.Stores">
+      <HintPath>C:\Users\aaulbekov\.nuget\packages\microsoft.extensions.identity.stores\2.2.0\lib\netstandard2.0\Microsoft.Extensions.Identity.Stores.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

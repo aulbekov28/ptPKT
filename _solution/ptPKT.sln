@@ -5,17 +5,22 @@ VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ptPKT.WebUI", "..\src\ptPKT.WebUI\ptPKT.WebUI.csproj", "{2D60A9C5-BB91-4E54-A461-5B7AAC25431D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ptPKT.SharedKernel", "..\src\ptPKT.SharedKernel\ptPKT.SharedKernel.csproj", "{014F95B0-9BDA-4AEA-BD0A-0195B0AA36E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ptPKT.SharedKernel", "..\src\ptPKT.SharedKernel\ptPKT.SharedKernel.csproj", "{014F95B0-9BDA-4AEA-BD0A-0195B0AA36E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ptPKT.Core", "..\src\ptPKT.Core\ptPKT.Core.csproj", "{287E59A7-3B9D-488B-BF3D-19A810D35F04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ptPKT.Core", "..\src\ptPKT.Core\ptPKT.Core.csproj", "{287E59A7-3B9D-488B-BF3D-19A810D35F04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ptPKT.Infrastructure", "..\src\ptPKT.Infrastructure\ptPKT.Infrastructure.csproj", "{C6685C8E-2256-46A1-A464-23840A1FB62D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ptPKT.Infrastructure", "..\src\ptPKT.Infrastructure\ptPKT.Infrastructure.csproj", "{C6685C8E-2256-46A1-A464-23840A1FB62D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C3DE30A8-22ED-492D-9331-63C25C61B3F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ptPKT.Tests", "..\tests\ptPKT.Tests\ptPKT.Tests.csproj", "{D416550E-70D8-47B4-8FDC-2C879EE33A1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ptPKT.Tests", "..\tests\ptPKT.Tests\ptPKT.Tests.csproj", "{D416550E-70D8-47B4-8FDC-2C879EE33A1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ptPKT.IntegrationTests", "..\tests\ptPKT.IntegrationTests\ptPKT.IntegrationTests.csproj", "{85507EC6-9138-4C77-81F4-A50DB895D7C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ptPKT.IntegrationTests", "..\tests\ptPKT.IntegrationTests\ptPKT.IntegrationTests.csproj", "{85507EC6-9138-4C77-81F4-A50DB895D7C5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{31D36CD2-F225-4501-8D55-5FAD8CFAE476}"
+	ProjectSection(SolutionItems) = preProject
+		..\Jenkinsfile = ..\Jenkinsfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
