@@ -22,4 +22,9 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ptPKT.Core\ptPKT.Core.csproj" />
+    <ProjectReference Include="..\ptPKT.SharedKernel\ptPKT.SharedKernel.csproj" />
+  </ItemGroup>
+
 </Project>
