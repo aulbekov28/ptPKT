@@ -1,3 +1,4 @@
+// TODO DELETE
 import { Component } from '@angular/core';
 
 @Component({

@@ -1,0 +1,40 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    [ngClass]="{'hidden': !(isHandset$ | async)!.matches}"
+    fixedInViewport="false"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)">
+    <mat-toolbar color="primary">Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item [routerLink]='["/"]' >Home</a>
+      <a mat-list-item [routerLink]='["/news"]'>News</a>
+      <a mat-list-item [routerLink]='["/counter"]'>Counter</a>
+      <a mat-list-item [routerLink]='["/fetch-data"]'>Fetch data</a>
+      <a mat-list-item [routerLink]='["/todos"]'>Todo list</a>
+      <a mat-list-item [routerLink]='["/products"]'>Products</a>
+      <mat-divider></mat-divider>
+      <a mat-list-item [routerLink]='["/login"]'>Login</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>My petto project #2</span>
+      <!-- <a [routerLink]='["/"]' >Home</a>
+      <a [routerLink]='["/counter"]'>Counter</a>
+      <a [routerLink]='["/fetch-data"]'>Fetch data</a> -->
+      <span class="spacer"></span>
+    </mat-toolbar>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
