@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ptPKT.SharedKernel
 {
@@ -6,6 +7,8 @@ namespace ptPKT.SharedKernel
     {
         public TId Id { get; }
 
+        public List<BaseDomainEvent> Events = new List<BaseDomainEvent>();
+        
         protected BaseEntity(TId id)
         {
             Id = id;

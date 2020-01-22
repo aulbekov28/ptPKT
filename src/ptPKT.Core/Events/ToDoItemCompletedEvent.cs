@@ -1,7 +1,10 @@
-using CleanArchitecture.Core.Entities;
-using CleanArchitecture.SharedKernel;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using ptPKT.Core.Entities;
+using ptPKT.SharedKernel;
 
-namespace CleanArchitecture.Core.Events
+namespace ptPKT.Core.Events
 {
     public class ToDoItemCompletedEvent : BaseDomainEvent
     {

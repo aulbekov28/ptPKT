@@ -10,6 +10,6 @@ namespace ptPKT.Core.Entities
         public int Quantity { get; set; }
 
         public int OrderId { get; set; }
-        public Order Order { get; set; }
+        public PurchaseOrder Order { get; set; }
     }
 }
