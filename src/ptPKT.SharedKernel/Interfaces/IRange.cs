@@ -6,5 +6,6 @@
         T End { get; }
         bool Includes(T value);
         bool Includes(IRange<T> range);
+        bool Overlaps(IRange<T> range);
     }
 }

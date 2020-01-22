@@ -6,9 +6,17 @@ namespace ptPKT.Core.Entities
     public class Appointment : BaseEntity<Guid>
     {
         public int ClientId { get; set; }
+
         public int EmployeeId { get; set; }
+
         public int RoomId { get; set; }
+
         public DateTimeRange StartEndTime { get; set; }
+
+        public bool DateTimeConfirmed { get; set; }
+
+        public bool IsPotentiallyConflicted { get; set; }
+
 
         public void UpdateTime(DateTimeRange newStartEndTime)
         {

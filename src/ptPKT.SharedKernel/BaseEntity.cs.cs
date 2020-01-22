@@ -28,6 +28,14 @@ namespace ptPKT.SharedKernel
 
     public abstract class BaseEntity : BaseEntity<int>
     {
+        protected BaseEntity(int id) : base(id)
+        {
+        }
+
+        protected BaseEntity() 
+        {
+        }
+
         public DateTime CreateDate { get; set; }
         public DateTime ModifyDate { get; set; }
         public bool isDeleted { get; set; }

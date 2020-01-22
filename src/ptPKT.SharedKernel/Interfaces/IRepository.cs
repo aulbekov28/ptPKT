@@ -12,9 +12,9 @@ namespace ptPKT.SharedKernel.Interfaces
         T Add<T>(T entity) where T : BaseEntity;
         void Update<T>(T entity) where T : BaseEntity;
         void Delete<T>(T entity) where T : BaseEntity;
-        IEnumerable<T> Get<T>(
-            Expression<Func<T, bool>> filter = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            string includeProperties = "") where T : BaseEntity;
+        //IEnumerable<T> Get<T>(
+        //    Expression<Func<T, bool>> filter = null,
+        //    Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+        //    string includeProperties = "") where T : BaseEntity;
     }
 }
