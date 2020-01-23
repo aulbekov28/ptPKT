@@ -47,10 +47,10 @@ namespace ptPKT.SharedKernel
                    range.End <= End;
         }
 
-        public bool Overlaps(DateTimeRange dateTimeRange)
+        public bool Overlaps(IRange<DateTime> range)
         {
-            return Start < dateTimeRange.End && 
-                   End > dateTimeRange.Start;
+            return Start < range.End &&
+                        End > range.Start;
         }
     }
 }

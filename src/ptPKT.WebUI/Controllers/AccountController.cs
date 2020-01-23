@@ -83,7 +83,6 @@ namespace ptPKT.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> SignOut()
         {
-
             throw new NotImplementedException();
         }
 

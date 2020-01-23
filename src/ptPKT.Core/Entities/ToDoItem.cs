@@ -4,6 +4,12 @@ namespace ptPKT.Core.Entities
 {
     public class ToDoItem : BaseEntity
     {
+        public ToDoItem() { }
+
+        public ToDoItem(int id) : base(id)
+        {
+        }
+
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; }
         public bool IsDone { get; private set; }

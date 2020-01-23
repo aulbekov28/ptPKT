@@ -1,72 +1,72 @@
-using NUnit.Framework;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Moq;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Moq;
 using ptPKT.Core.Identity;
 using ptPKT.WebUI.Controllers;
 using ptPKT.WebUI.Models;
+using System;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace ptPKT.Tests
 {
     public class AccountTests
     {
-        private UserManager<AppUser> userManager;
-        private const string passwd = "password";
-        private const string email = "test@test.mail";
+        private readonly UserManager<AppUser> _userManager;
+        private const string GoodPasswd = "badpassword";
+        private const string BadPasswd = "password";
+        private const string Email = "test@test.mail";
 
-        [SetUp]
-        public void Setup()
+        public AccountTests()
         {
             Environment.SetEnvironmentVariable("JWT_SECRET", "verysecrettestjwtkeythatnoonewilleverknow");
-            var UserStoreMock = Mock.Of<IUserStore<AppUser>>();
-            var userMgr = new Mock<UserManager<AppUser>>(UserStoreMock, null, null, null, null, null, null, null, null);
+            var userStoreMock = Mock.Of<IUserStore<AppUser>>();
+            var userMgr = new Mock<UserManager<AppUser>>(userStoreMock, null, null, null, null, null, null, null, null);
             var user = new AppUser
             {
-                // UserName = "test",
+                UserName = "test",
                 FirstName = "test",
                 SecondName = "test",
-                // Email = email
+                Email = Email
             };
-
 
             var tcs = new TaskCompletionSource<AppUser>();
             tcs.SetResult(user);
 
-            //userMgr.Setup(x => x.FindByEmailAsync(user.Email)).Returns(tcs.Task);
-            userMgr.Setup(x => x.CheckPasswordAsync(user, "password")).Returns(Task.FromResult(true));
+            userMgr.Setup(x => x.FindByEmailAsync(user.Email)).Returns(tcs.Task);
+            userMgr.Setup(x => x.CheckPasswordAsync(user, GoodPasswd)).Returns(Task.FromResult(true));
 
-            userManager = userMgr.Object;
+            _userManager = userMgr.Object;
         }
-        [Test]
+
+        [Fact]
         public async Task UserLogsIn_WithValidCredentials()
         {
-            var loginModel = new LoginModel()
+            var loginModel = new LoginModel
             {
-                Email = email,
-                Password = "password"
+                Email = Email,
+                Password = GoodPasswd
             };
 
-            var controller = new AccountController(userManager);
+            var controller = new AccountController(_userManager);
 
             var result = await controller.SignIn(loginModel);
-            Assert.IsInstanceOf(typeof(OkObjectResult), result);
+            Assert.IsType<OkObjectResult>(result);
         }
 
-        [Test]
+        [Fact]
         public async Task UserLogsIn_WithBadPassword()
         {
-            var loginModel = new LoginModel()
+            var loginModel = new LoginModel
             {
-                Email = email,
-                Password = "badpassword"
+                Email = Email,
+                Password = BadPasswd
             };
 
-            var controller = new AccountController(userManager);
+            var controller = new AccountController(_userManager);
 
             var result = await controller.SignIn(loginModel);
-            Assert.IsInstanceOf(typeof(BadRequestObjectResult), result);
+            Assert.IsType<BadRequestObjectResult>(result);
         }
     }
 }
