@@ -20,35 +20,21 @@ namespace ptPKT.Tests
             var userStoreMock = Mock.Of<IUserStore<AppUser>>();
             var userMgr = new Mock<UserManager<AppUser>>(userStoreMock, null, null, null, null, null, null, null, null);
 
-            var fakeAppUser = new AppUserBuilder().Build();
+            var defaultAppUser = new AppUserBuilder().Build();
 
-            var user = new AppUser
-            {
-                UserName = fakeAppUser.UserName,
-                FirstName = fakeAppUser.FirstName,
-                SecondName = fakeAppUser.SecondName,
-                Email = fakeAppUser.Email
-            };
+            var user = defaultAppUser.GetAppUser();
 
             var newFakeAppUserAppUser = new AppUserBuilder().NewUserRegistration().Build();
-
-            var newUser = new AppUser
-            {
-                UserName = newFakeAppUserAppUser.UserName,
-                FirstName = newFakeAppUserAppUser.FirstName,
-                SecondName = newFakeAppUserAppUser.SecondName,
-                Email = newFakeAppUserAppUser.Email
-            };
 
             var tcs = new TaskCompletionSource<AppUser>();
             tcs.SetResult(user);
 
             userMgr.Setup(x => x.FindByEmailAsync(user.Email)).Returns(tcs.Task);
-            userMgr.Setup(x => x.CheckPasswordAsync(user, fakeAppUser.Password)).Returns(Task.FromResult(true));
-            //userMgr.Setup(x => x.CreateAsync(newUser, newFakeAppUserAppUser.Password)).Returns(Task.FromResult(IdentityResult.Success));
+            userMgr.Setup(x => x.CheckPasswordAsync(user, defaultAppUser.Password)).Returns(Task.FromResult(true));
             userMgr.Setup(x => x.CreateAsync(It.IsAny<AppUser>(), It.IsAny<string>())).Returns(Task.FromResult(IdentityResult.Success));
-            //userMgr.Setup(x => x.CreateAsync(It.IsAny<TUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success).Callback<TUser, string>((x, y) => ls.Add(x));
-            
+
+            //TODO https://stackoverflow.com/questions/49165810/how-to-mock-usermanager-in-net-core-testing/49174248
+
             _userManager = userMgr.Object;
         }
 
@@ -71,7 +57,7 @@ namespace ptPKT.Tests
         [Fact]
         public async Task UserLogsIn_BadPassword_ReturnsBadRequestResult()
         {
-            var user = new AppUserBuilder().WithWrongPassword().Build();
+            var user = new AppUserBuilder().WithWrongPassword(TODO).Build();
             var loginModel = new LoginModelDTO
             {
                 Email = user.Email,

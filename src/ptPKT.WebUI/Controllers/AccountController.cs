@@ -81,11 +81,18 @@ namespace ptPKT.WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> SignOut()
+        [Authorize]
+        public IActionResult SignOut()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            var userId = User.Claims.First(u => u.Type == "id").Value;
+            var _appUser = _userManager.FindByIdAsync(userId).Result;
+            
+            return Ok(new LoginResponseModel()
+            {
+                Token = "fakentokenresult"
+            });
         }
-
 
         private string GenerateToken(AppUser user)
         {

@@ -1,4 +1,6 @@
-﻿namespace ptPKT.Tests
+﻿using ptPKT.Core.Identity;
+
+namespace ptPKT.Tests
 {
     public class FakeAppUser
     {
@@ -7,11 +9,22 @@
         public string FirstName { get; set; }
         public string SecondName { get; set; }
         public string Password { get; set; }
+
+        public AppUser GetAppUser()
+        {
+            return new AppUser
+            {
+                Email = Email,
+                UserName = UserName,
+                FirstName = FirstName,
+                SecondName = SecondName,
+            };
+        }
     }
 
     public class AppUserBuilder
     {
-        private FakeAppUser _entity = new FakeAppUser()
+        private readonly FakeAppUser _entity = new FakeAppUser
         {
             Email = "default@mail.test",
             Password = "defaultpassword",
@@ -22,15 +35,15 @@
 
         public FakeAppUser Build() => _entity;
 
-        public AppUserBuilder NotRegistered()
+        public AppUserBuilder NotRegistered(string email = "absolutelyNewEmail@mail.test")
         {
-            _entity.Email = "absolutelyNewEmail@mail.test";
+            _entity.Email = email;
             return this;
         }
 
-        public AppUserBuilder WithWrongPassword()
+        public AppUserBuilder WithWrongPassword(string password = "wrongpassword")
         {
-            _entity.Password = "wrongpassword";
+            _entity.Password = password;
             return this;
         }
 
