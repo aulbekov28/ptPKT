@@ -2,7 +2,7 @@
 
 namespace ptPKT.WebUI.Models
 {
-    public class LoginModel
+    public class LoginModelDTO
     {
         [Required(ErrorMessage = "Email is not specified")]
         public string Email { get; set; }

@@ -24,7 +24,7 @@ namespace ptPKT.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignIn([FromBody] LoginModel model)
+        public async Task<IActionResult> SignIn([FromBody] LoginModelDTO model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -50,7 +50,7 @@ namespace ptPKT.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignUp([FromBody] RegisterModel model)
+        public async Task<IActionResult> SignUp([FromBody] RegisterModelDTO model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

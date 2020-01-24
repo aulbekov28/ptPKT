@@ -2,7 +2,7 @@
 
 namespace ptPKT.WebUI.Models
 {
-    public class RegisterModel
+    public class RegisterModelDTO
     {
         [Required(ErrorMessage = "Email")]
         public string Email { get; set; }
