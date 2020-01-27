@@ -56,10 +56,5 @@ namespace ptPKT.Tests
             _entity.Password = "newpassword";
             return this;
         }
-
-        public AppUserBuilder Default()
-        {
-            return this;
-        }
     }
 }

@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using ptPKT.Infrastructure.Data;
 
 namespace ptPKT.WebUI
 {
@@ -24,6 +26,10 @@ namespace ptPKT.WebUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            //services.AddDbContext<AppDbContext>(options => options.Use(connectionString));
+            services.AddEntityFrameworkNpgsql()
+                    .AddDbContext<AppDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("ptConnectionDev")));
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

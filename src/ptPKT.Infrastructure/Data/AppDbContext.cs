@@ -11,6 +11,8 @@ namespace ptPKT.Infrastructure.Data
     {
         public readonly IDomainEventDispatcher _dispatcher;
 
+        public AppDbContext() { }
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public AppDbContext(DbContextOptions<AppDbContext> options, IDomainEventDispatcher dispatcher) 

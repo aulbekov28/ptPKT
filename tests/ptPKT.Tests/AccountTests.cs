@@ -57,7 +57,7 @@ namespace ptPKT.Tests
         [Fact]
         public async Task UserLogsIn_BadPassword_ReturnsBadRequestResult()
         {
-            var user = new AppUserBuilder().WithWrongPassword(TODO).Build();
+            var user = new AppUserBuilder().WithWrongPassword().Build();
             var loginModel = new LoginModelDTO
             {
                 Email = user.Email,

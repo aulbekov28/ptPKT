@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ptPKT.Core\ptPKT.Core.csproj" />
+    <ProjectReference Include="..\ptPKT.Infrastructure\ptPKT.Infrastructure.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
