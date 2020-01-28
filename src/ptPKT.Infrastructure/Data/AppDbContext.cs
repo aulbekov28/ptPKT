@@ -3,11 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using ptPKT.Core.Entities;
 using ptPKT.SharedKernel.Interfaces;
 using System.Reflection;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using ptPKT.Core.Identity;
 using ptPKT.SharedKernel;
 
 namespace ptPKT.Infrastructure.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<AppUser,AppRole,int>
     {
         public readonly IDomainEventDispatcher _dispatcher;
 
