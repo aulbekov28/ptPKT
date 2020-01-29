@@ -86,7 +86,7 @@ namespace ptPKT.WebUI.Controllers
         {
             //throw new NotImplementedException();
             var userId = User.Claims.First(u => u.Type == "id").Value;
-            var _appUser = _userManager.FindByIdAsync(userId).Result;
+            //var _appUser = _userManager.FindByIdAsync(userId).Result;
             
             return Ok(new LoginResponseModel()
             {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ptPKT.Core.Entities;
+﻿using ptPKT.Core.Entities;
 using ptPKT.SharedKernel;
 
 namespace ptPKT.Core.Events

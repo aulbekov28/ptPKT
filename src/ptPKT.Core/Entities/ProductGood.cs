@@ -1,5 +1,4 @@
-﻿using ptPKT.SharedKernel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ptPKT.Core.Entities
 {

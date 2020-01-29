@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using ptPKT.Core.Entities;
 using System.Linq;
 using ptPKT.Tests;

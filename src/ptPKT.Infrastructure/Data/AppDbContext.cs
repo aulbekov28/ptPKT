@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using ptPKT.Core.Entities;
 using ptPKT.SharedKernel.Interfaces;
@@ -36,6 +37,27 @@ namespace ptPKT.Infrastructure.Data
 
         public override int SaveChanges()
         {
+            //TODO modified by,created by. Or nove it to reposirory?
+            var now = DateTime.Now;
+            var changeSet = ChangeTracker.Entries<BaseEntity>();
+
+            foreach (var changedItem in changeSet)
+            {
+                switch (changedItem.State)
+                {
+                    case EntityState.Added:
+                        changedItem.Entity.CreateDate = now;
+                        changedItem.Entity.ModifyDate = now;
+                        //changedItem.Entity.CreatorId = 
+                        //changedItem.Entity.ModifierId = 
+                        break;
+                    case EntityState.Modified:
+                        changedItem.Entity.ModifyDate = now;
+                        //changedItem.Entity.ModifierId = 
+                        break;
+                }
+            }
+
             var result = base.SaveChanges();
 
             // ignore events if no dispatcher provided

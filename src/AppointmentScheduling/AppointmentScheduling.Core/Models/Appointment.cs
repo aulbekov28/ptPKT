@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AppointmentScheduling.Core.Models
+﻿namespace AppointmentScheduling.Core.Models
 {
     public class Appointment
     {

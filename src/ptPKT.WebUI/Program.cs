@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace ptPKT.WebUI
 {
@@ -14,6 +15,13 @@ namespace ptPKT.WebUI
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                    logging.AddDebug();
+                    logging.AddEventSourceLogger();
+                } );
     }
 }

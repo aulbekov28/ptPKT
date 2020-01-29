@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using ptPKT.Infrastructure.Data;
+using ptPKT.SharedKernel;
 
 namespace ptPKT.WebUI
 {
@@ -23,7 +25,7 @@ namespace ptPKT.WebUI
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -41,11 +43,22 @@ namespace ptPKT.WebUI
             {
                 c.SwaggerDoc("aplha", new OpenApiInfo {Title = "My API", Version = "aplha"});
             });
+            return BuildDependencyInjectionProvider(services);
         }
 
         private static IServiceProvider BuildDependencyInjectionProvider(IServiceCollection services)
         {
             var builder = new ContainerBuilder();
+
+            // Populate the container using the service collection
+            builder.Populate(services);
+
+            var webAssembly = Assembly.GetExecutingAssembly();
+            var coreAssembly = Assembly.GetAssembly(typeof(BaseEntity));
+            var infrastructureAssembly = Assembly.GetAssembly(typeof(EfRepository)); // TODO: Move to Infrastucture Registry
+
+            builder.RegisterAssemblyTypes(webAssembly, coreAssembly, infrastructureAssembly).AsImplementedInterfaces();
+
             IContainer container = builder.Build();
             return new AutofacServiceProvider(container);
         }

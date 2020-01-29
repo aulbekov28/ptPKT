@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using ptPKT.Infrastructure.Data;
 using ptPKT.SharedKernel;
 using ptPKT.SharedKernel.Interfaces;
 using Microsoft.EntityFrameworkCore;

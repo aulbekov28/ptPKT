@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ptPKT.Infrastructure
+﻿namespace ptPKT.Infrastructure
 {
     public static class StartupSetup
     {

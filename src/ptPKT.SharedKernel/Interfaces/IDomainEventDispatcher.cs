@@ -1,6 +1,4 @@
-﻿using ptPKT.SharedKernel;
-
-namespace ptPKT.SharedKernel.Interfaces
+﻿namespace ptPKT.SharedKernel.Interfaces
 {
     public interface IDomainEventDispatcher
     {
