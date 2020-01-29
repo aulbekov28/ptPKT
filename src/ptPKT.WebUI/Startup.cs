@@ -41,7 +41,7 @@ namespace ptPKT.WebUI
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("aplha", new OpenApiInfo {Title = "My API", Version = "aplha"});
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "My API", Version = "v1"});
             });
             return BuildDependencyInjectionProvider(services);
         }
@@ -77,6 +77,15 @@ namespace ptPKT.WebUI
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             app.UseMvc(routes =>
             {

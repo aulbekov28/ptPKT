@@ -6,7 +6,7 @@ export interface IBase {
 }
 
 export class Base implements IBase {
-    id: number;    
+    Id: number;    
     isDeleted: boolean;
     createDate: Date;
     modifyDate: Date;

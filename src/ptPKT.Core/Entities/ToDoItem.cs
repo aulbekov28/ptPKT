@@ -1,4 +1,5 @@
-﻿using ptPKT.SharedKernel;
+﻿using ptPKT.Core.Events;
+using ptPKT.SharedKernel;
 
 namespace ptPKT.Core.Entities
 {
@@ -17,7 +18,7 @@ namespace ptPKT.Core.Entities
         public void MarkComplete()
         {
             IsDone = true;
-            // Events.Add(new ToDoItemCompletedEvent(this));
+            Events.Add(new ToDoItemCompletedEvent(this));
         }
     }
 }

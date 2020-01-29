@@ -5,7 +5,7 @@ import { Todo } from "../_models/todo.model";
 
 @Injectable()
 export class TodoService extends ApiService {
-    relativeUrl: string = "/Todo/";
+    relativeUrl: string = "/ToDoItems/";
     
     public getAll(): Observable<Todo[]> {
         return this.get(this.relativeUrl);

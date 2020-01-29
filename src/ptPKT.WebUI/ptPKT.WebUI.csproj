@@ -31,6 +31,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ptPKT.Core\ptPKT.Core.csproj" />
     <ProjectReference Include="..\ptPKT.Infrastructure\ptPKT.Infrastructure.csproj" />
+    <ProjectReference Include="..\ptPKT.SharedKernel\ptPKT.SharedKernel.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
