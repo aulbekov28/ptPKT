@@ -26,7 +26,7 @@ namespace ptPKT.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignIn([FromBody] LoginModelDTO model)
+        public async Task<IActionResult> SignIn([FromBody] LoginDTO model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -39,7 +39,7 @@ namespace ptPKT.WebUI.Controllers
             if (!result)
                 return BadRequest("Wrong email or password");
 
-            var response = new LoginResponseModel()
+            var response = new LoginResponseDTO()
             {
                 Id = user.Id,
                 Email = user.Email,
@@ -52,7 +52,7 @@ namespace ptPKT.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignUp([FromBody] RegisterModelDTO model)
+        public async Task<IActionResult> SignUp([FromBody] RegisterDTO model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -70,7 +70,7 @@ namespace ptPKT.WebUI.Controllers
             if (!result.Succeeded)
                 return BadRequest(result.Errors.First().Description);
 
-            var response = new LoginResponseModel()
+            var response = new LoginResponseDTO()
             {
                 Id = newUser.Id,
                 Email = newUser.Email,
@@ -90,7 +90,7 @@ namespace ptPKT.WebUI.Controllers
             var userId = User.Claims.First(u => u.Type == "id").Value;
             //var _appUser = _userManager.FindByIdAsync(userId).Result;
             
-            return Ok(new LoginResponseModel()
+            return Ok(new LoginResponseDTO()
             {
                 Token = "fakentokenresult"
             });

@@ -24,7 +24,7 @@ namespace ptPKT.Tests
             return this;
         }
 
-        public ToDoItemBuilder WithDefaultValues()
+        public ToDoItemBuilder Default()
         {
             _todo = new ToDoItem(1) { Title = "Test Item", Description = "Test Description" };
             return this;
