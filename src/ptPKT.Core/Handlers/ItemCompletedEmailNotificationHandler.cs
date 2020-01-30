@@ -9,7 +9,8 @@ namespace CleanArchitecture.Core.Events
         public void Handle(ToDoItemCompletedEvent domainEvent)
         {
             // Do Something
-            Console.WriteLine("123");
+            Console.BackgroundColor = ConsoleColor.Green;
+            Console.WriteLine($"{typeof(ItemCompletedEmailNotificationHandler)} occured");
         }
     }
 }

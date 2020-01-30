@@ -1,5 +1,3 @@
-using System;
-using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
@@ -10,8 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using ptPKT.Core.Identity;
 using ptPKT.Infrastructure.Data;
 using ptPKT.SharedKernel;
+using System;
+using System.Reflection;
 
 namespace ptPKT.WebUI
 {
@@ -54,10 +55,11 @@ namespace ptPKT.WebUI
             builder.Populate(services);
 
             var webAssembly = Assembly.GetExecutingAssembly();
-            var coreAssembly = Assembly.GetAssembly(typeof(BaseEntity));
+            var coreAssembly = Assembly.GetAssembly(typeof(AppRole));
+            var sharedAssembly = Assembly.GetAssembly(typeof(BaseEntity));
             var infrastructureAssembly = Assembly.GetAssembly(typeof(EfRepository)); // TODO: Move to Infrastucture Registry
 
-            builder.RegisterAssemblyTypes(webAssembly, coreAssembly, infrastructureAssembly).AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(webAssembly, coreAssembly, sharedAssembly, infrastructureAssembly).AsImplementedInterfaces();
 
             IContainer container = builder.Build();
             return new AutofacServiceProvider(container);
