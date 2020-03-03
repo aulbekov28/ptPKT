@@ -9,6 +9,7 @@ using System.Security.Authentication;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using ptPKT.Core.Exceptions.Indentity;
 
 namespace ptPKT.Core.Services.Account
 {
@@ -25,11 +26,11 @@ namespace ptPKT.Core.Services.Account
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
-                throw new AuthenticationException();
+                throw new AppUserNotFoundException();
 
             var result = await _userManager.CheckPasswordAsync(user, model.Password);
             if (!result)
-                throw new AuthenticationException();
+                throw new AppUserIncorrectPasswordException();
 
             var response = new LoginResult()
             {
@@ -55,7 +56,7 @@ namespace ptPKT.Core.Services.Account
             var result = await _userManager.CreateAsync(newUser, model.Password);
 
             if (!result.Succeeded)
-                throw new OperationCanceledException();
+                throw new AppUserCreationException(result.Errors);
 
             var response = new LoginResult()
             {
