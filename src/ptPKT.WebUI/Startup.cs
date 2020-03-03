@@ -30,9 +30,8 @@ namespace ptPKT.WebUI
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            //services.AddDbContext<AppDbContext>(options => options.Use(connectionString));
             services.AddEntityFrameworkNpgsql()
-                    .AddDbContext<AppDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("ptConnectionDev")));
+                    .AddDbContext<AppDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString(nameof(AppDbContext))));
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -51,7 +50,8 @@ namespace ptPKT.WebUI
         {
             var builder = new ContainerBuilder();
 
-            // Populate the container using the service collection
+            //services.AddIdentity<>()
+
             builder.Populate(services);
 
             var webAssembly = Assembly.GetExecutingAssembly();
@@ -98,9 +98,6 @@ namespace ptPKT.WebUI
 
             app.UseSpa(spa =>
             {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
                 spa.Options.SourcePath = "ClientApp";
 
                 if (env.IsDevelopment())
