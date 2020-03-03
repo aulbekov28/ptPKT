@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ptPKT.WebUI.Models
 {
+    [Obsolete]
     public class UserRegisterDto
     {
         [Required(ErrorMessage = "Email")]

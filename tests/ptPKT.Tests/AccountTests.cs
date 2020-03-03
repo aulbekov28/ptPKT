@@ -45,7 +45,7 @@ namespace ptPKT.Tests
         public async Task UserLogsIn_ValidCredentials_ReturnsOkRequestResult()
         {
             var user = new AppUserBuilder().Build();
-            var loginModel = new UserLoginDTO
+            var loginModel = new UserLoginModel()
             {
                 Email = user.Email,
                 Password = user.Password
@@ -61,7 +61,7 @@ namespace ptPKT.Tests
         public async Task UserLogsIn_BadPassword_ReturnsBadRequestResult()
         {
             var user = new AppUserBuilder().WithWrongPassword().Build();
-            var loginModel = new UserLoginDTO
+            var loginModel = new UserLoginModel()
             {
                 Email = user.Email,
                 Password = user.Password
@@ -77,7 +77,7 @@ namespace ptPKT.Tests
         public async Task UserLogsIn_NotRegistered_ReturnsBadRequestResult()
         {
             var user = new AppUserBuilder().NotRegistered().Build();
-            var loginModel = new UserLoginDTO
+            var loginModel = new UserLoginModel()
             {
                 Email = user.Email,
                 Password = user.Password
@@ -93,7 +93,7 @@ namespace ptPKT.Tests
         public async Task UserSingUp_ValidNewUser_ReturnsOkResponse()
         {
             var user = new AppUserBuilder().NewUserRegistration().Build();
-            var registerModel = new UserRegisterDto()
+            var registerModel = new UserRegistedModel()
             {
                 Email = user.Email,
                 Password = user.Password,

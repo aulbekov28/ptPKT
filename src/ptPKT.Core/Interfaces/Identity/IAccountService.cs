@@ -12,7 +12,7 @@ namespace ptPKT.Core.Interfaces.Identity
         IEnumerable<AppUser> GetUsers();
         Task<UserLoginResult> ResetPasswordAsync(UserLoginModel user);
         Task<UserLoginResult> SignIn(UserLoginModel model);
-        Task SignOut();
+        UserLoginResult SignOut();
         Task<UserLoginResult> SignUp(UserRegistedModel model);
     }
 }

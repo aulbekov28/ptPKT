@@ -1,6 +1,9 @@
-﻿namespace ptPKT.WebUI.Models
+﻿using System;
+
+namespace ptPKT.WebUI.Models
 {
-    public class UserLoginResultDTO
+    [Obsolete]
+    public class UserLoginResultDto
     {
         public int Id { get; set; }
 

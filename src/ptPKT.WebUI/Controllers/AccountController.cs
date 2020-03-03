@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using ptPKT.Core.Exceptions.Indentity;
 using ptPKT.Core.Interfaces.Identity;
 using ptPKT.Core.Services.Identity;
-using ptPKT.WebUI.Models;
 using System;
 using System.Threading.Tasks;
 
@@ -21,87 +20,60 @@ namespace ptPKT.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignIn([FromBody] UserLoginDTO model)
+        public async Task<IActionResult> SignIn([FromBody] UserLoginModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             try
             {
-                var response = await _accountService.SignIn(new UserLoginModel()
-                {
-                    Email = model.Email,
-                    Password = model.Password
-                });
+                var response = await _accountService.SignIn(model);
                 return Ok(response);
             }
-            catch (AppUserNotFoundException ex)
+            catch (AppUserNotFoundException)
             {
-                // TODO 
-                // logger 
+                return Unauthorized();
             }
-            catch (AppUserIncorrectPasswordException ex)
+            catch (AppUserIncorrectPasswordException)
             {
-
+                return Unauthorized();
             }
-
-            return BadRequest();
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignUp([FromBody] UserRegisterDto model)
+        public async Task<IActionResult> SignUp([FromBody] UserRegistedModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var response = await _accountService.SignUp(new UserRegistedModel()
-                {
-                    UserName = model.Email,
-                    FirstName = model.FirstName,
-                    SecondName = model.SecondName,
-                    Email = model.Email,
-                    Password = model.Password
-                });
+                var response = await _accountService.SignUp(model);
                 return Ok(response);
             }
-            catch (AppUserCreationException ex)
+            catch (AppUserCreationException)
             {
                 // 
             }
 
-            return BadRequest();
+            return Unauthorized();
         }
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> SignOutAsync()
+        public IActionResult SignOut()
         {
-            await _accountService.SignOut();
+            var result = _accountService.SignOut();
 
-            return Ok(new UserLoginResultDTO()
-            {
-                Token = "fakentokenresult"
-            });
+            return Ok(result);
         }
 
 
         [HttpGet]
+        [Authorize]
         public IActionResult UserList()
         {
             var users = _accountService.GetUsers();
             return Ok(users);
-        }
-
-        [HttpGet]
-        [Authorize]
-        public IActionResult Check()
-        {
-            // TODO
-            //var userId = User.Claims.First(u => u.Type == "id").Value;
-            //var _appUser = _userManager.FindByIdAsync(userId).Result;
-            //return Ok(_appUser);
-            throw new NotImplementedException();
         }
     }
 }

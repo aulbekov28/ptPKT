@@ -68,9 +68,13 @@ namespace ptPKT.Core.Services.Identity
             return response;
         }
 
-        public async Task SignOut()
+        public UserLoginResult SignOut()
         {
-            // return Success Result with fake Token ???
+            return new UserLoginResult()
+            {
+                Id = -1,
+                Token = Guid.NewGuid().ToString()
+            };
         }
 
         public IEnumerable<AppUser> GetUsers()
@@ -101,8 +105,8 @@ namespace ptPKT.Core.Services.Identity
                 new Claim("id", user.Id.ToString())
             };
 
-            var signingKey =
-                new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET")));
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET")));
+
             var creds = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddDays(60);
 

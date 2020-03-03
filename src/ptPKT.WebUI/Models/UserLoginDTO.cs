@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ptPKT.WebUI.Models
 {
-    public class UserLoginDTO
+    [Obsolete]
+    public class UserLoginDto
     {
         [Required(ErrorMessage = "Email is not specified")]
         public string Email { get; set; }
