@@ -2,18 +2,18 @@
 
 namespace ptPKT.WebUI.Models
 {
-    public class RegisterDTO
+    public class UserRegisterDto
     {
         [Required(ErrorMessage = "Email")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Password")]
         [DataType(DataType.Password)]
-
         public string Password { get; set; }
-        [Required]
 
+        [Required]
         public string UserName { get; set; }
+
         [Required]
         public string FirstName { get; set; }
 

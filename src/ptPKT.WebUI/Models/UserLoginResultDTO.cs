@@ -1,6 +1,6 @@
 ﻿namespace ptPKT.WebUI.Models
 {
-    public class LoginResponseDTO
+    public class UserLoginResultDTO
     {
         public int Id { get; set; }
 

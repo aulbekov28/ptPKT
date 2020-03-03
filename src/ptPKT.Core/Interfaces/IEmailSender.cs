@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ptPKT.Core.Entities.Infrastrucutre;
+using ptPKT.Core.Entities.Infrastructure;
 
 namespace ptPKT.Core.Interfaces
 {

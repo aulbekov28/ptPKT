@@ -6,13 +6,15 @@ using ptPKT.WebUI.Controllers;
 using ptPKT.WebUI.Models;
 using System;
 using System.Threading.Tasks;
+using ptPKT.Core.Interfaces.Identity;
+using ptPKT.Core.Services.Identity;
 using Xunit;
 
 namespace ptPKT.Tests
 {
     public class AccountTests
     {
-        private readonly UserManager<AppUser> _userManager;
+        private readonly IAccountService _accountService;
  
         public AccountTests()
         {
@@ -35,20 +37,21 @@ namespace ptPKT.Tests
 
             //TODO https://stackoverflow.com/questions/49165810/how-to-mock-usermanager-in-net-core-testing/49174248
 
-            _userManager = userMgr.Object;
+            var userManager = userMgr.Object;
+            _accountService = new AccountService(userManager);
         }
 
         [Fact]
         public async Task UserLogsIn_ValidCredentials_ReturnsOkRequestResult()
         {
             var user = new AppUserBuilder().Build();
-            var loginModel = new LoginDTO
+            var loginModel = new UserLoginDTO
             {
                 Email = user.Email,
                 Password = user.Password
             };
 
-            var controller = new AccountController(_userManager);
+            var controller = new AccountController(_accountService);
 
             var result = await controller.SignIn(loginModel);
             Assert.IsType<OkObjectResult>(result);
@@ -58,13 +61,13 @@ namespace ptPKT.Tests
         public async Task UserLogsIn_BadPassword_ReturnsBadRequestResult()
         {
             var user = new AppUserBuilder().WithWrongPassword().Build();
-            var loginModel = new LoginDTO
+            var loginModel = new UserLoginDTO
             {
                 Email = user.Email,
                 Password = user.Password
             };
 
-            var controller = new AccountController(_userManager);
+            var controller = new AccountController(_accountService);
 
             var result = await controller.SignIn(loginModel);
             Assert.IsType<BadRequestObjectResult>(result);
@@ -74,13 +77,13 @@ namespace ptPKT.Tests
         public async Task UserLogsIn_NotRegistered_ReturnsBadRequestResult()
         {
             var user = new AppUserBuilder().NotRegistered().Build();
-            var loginModel = new LoginDTO
+            var loginModel = new UserLoginDTO
             {
                 Email = user.Email,
                 Password = user.Password
             };
 
-            var controller = new AccountController(_userManager);
+            var controller = new AccountController(_accountService);
 
             var result = await controller.SignIn(loginModel);
             Assert.IsType<BadRequestObjectResult>(result);
@@ -90,7 +93,7 @@ namespace ptPKT.Tests
         public async Task UserSingUp_ValidNewUser_ReturnsOkResponse()
         {
             var user = new AppUserBuilder().NewUserRegistration().Build();
-            var registerModel = new RegisterDTO()
+            var registerModel = new UserRegisterDto()
             {
                 Email = user.Email,
                 Password = user.Password,
@@ -99,7 +102,7 @@ namespace ptPKT.Tests
                 SecondName = user.SecondName,
             };
 
-            var controller = new AccountController(_userManager);
+            var controller = new AccountController(_accountService);
 
             var result = await controller.SignUp(registerModel);
             Assert.IsType<OkObjectResult>(result);

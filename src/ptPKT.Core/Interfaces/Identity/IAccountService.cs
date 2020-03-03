@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ptPKT.Core.Identity;
-using ptPKT.Core.Services.Account;
+using ptPKT.Core.Services.Identity;
 
-namespace ptPKT.Core.Interfaces.Account
+namespace ptPKT.Core.Interfaces.Identity
 {
     public interface IAccountService
     {
         Task ConfirmEmailAsync(string confirmationToken);
         Task ForgotPasswordAsync(UserLoginModel user);
         IEnumerable<AppUser> GetUsers();
-        Task<LoginResult> ResetPasswordAsync(UserLoginModel user);
-        Task<LoginResult> SignIn(UserLoginModel model);
+        Task<UserLoginResult> ResetPasswordAsync(UserLoginModel user);
+        Task<UserLoginResult> SignIn(UserLoginModel model);
         Task SignOut();
-        Task<LoginResult> SignUp(UserRegistedModel model);
+        Task<UserLoginResult> SignUp(UserRegistedModel model);
     }
 }

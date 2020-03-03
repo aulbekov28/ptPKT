@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text;
-using ptPKT.Core.Entities.Infrastrucutre;
+using ptPKT.Core.Entities.Infrastructure;
 using ptPKT.Core.Interfaces;
 
 namespace ptPKT.Core.Services

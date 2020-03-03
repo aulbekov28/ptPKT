@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ptPKT.Core.Entities.Infrastrucutre
+﻿namespace ptPKT.Core.Entities.Infrastructure
 {
     public class EmailNotification
     {

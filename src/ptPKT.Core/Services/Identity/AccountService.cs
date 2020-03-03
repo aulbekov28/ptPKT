@@ -1,28 +1,27 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using ptPKT.Core.Identity;
-using ptPKT.Core.Interfaces.Account;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Authentication;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using ptPKT.Core.Exceptions.Indentity;
+using ptPKT.Core.Identity;
+using ptPKT.Core.Interfaces.Identity;
 
-namespace ptPKT.Core.Services.Account
+namespace ptPKT.Core.Services.Identity
 {
     public class AccountService : IAccountService
     {
         private readonly UserManager<AppUser> _userManager;
 
-        public AccountService(UserManager<AppUser> _userManager)
+        public AccountService(UserManager<AppUser> userManager)
         {
-            this._userManager = _userManager;
+            _userManager = userManager;
         }
 
-        public async Task<LoginResult> SignIn(UserLoginModel model)
+        public async Task<UserLoginResult> SignIn(UserLoginModel model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
@@ -32,7 +31,7 @@ namespace ptPKT.Core.Services.Account
             if (!result)
                 throw new AppUserIncorrectPasswordException();
 
-            var response = new LoginResult()
+            var response = new UserLoginResult()
             {
                 Id = user.Id,
                 FirstName = user.FirstName,
@@ -43,7 +42,7 @@ namespace ptPKT.Core.Services.Account
             return response;
         }
 
-        public async Task<LoginResult> SignUp(UserRegistedModel model)
+        public async Task<UserLoginResult> SignUp(UserRegistedModel model)
         {
             var newUser = new AppUser
             {
@@ -58,7 +57,7 @@ namespace ptPKT.Core.Services.Account
             if (!result.Succeeded)
                 throw new AppUserCreationException(result.Errors);
 
-            var response = new LoginResult()
+            var response = new UserLoginResult()
             {
                 Id = newUser.Id,
                 FirstName = newUser.FirstName,
@@ -89,7 +88,7 @@ namespace ptPKT.Core.Services.Account
             throw new NotImplementedException();
         }
 
-        public async Task<LoginResult> ResetPasswordAsync(UserLoginModel user)
+        public async Task<UserLoginResult> ResetPasswordAsync(UserLoginModel user)
         {
             throw new NotImplementedException();
         }
@@ -114,29 +113,5 @@ namespace ptPKT.Core.Services.Account
             );
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-    }
-
-    public class LoginResult
-    {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string SecondName { get; set; }
-        public string UserName { get; set; }
-        public string Token { get; set; }
-    }
-
-    public class UserRegistedModel
-    {
-        public string FirstName { get; set; }
-        public string SecondName { get; set; }
-        public string UserName { get; set; } 
-        public string Email { get; set; } 
-        public string Password { get; set; } 
-    }
-
-    public class UserLoginModel
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
     }
 }
