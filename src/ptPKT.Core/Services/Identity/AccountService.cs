@@ -70,11 +70,18 @@ namespace ptPKT.Core.Services.Identity
 
         public UserLoginResult SignOut()
         {
+            var nullUser = new FakeUser();
             return new UserLoginResult()
             {
-                Id = -1,
-                Token = Guid.NewGuid().ToString()
+                Id = nullUser.Id,
+                Token = GenerateToken(nullUser)
             };
+        }
+
+        public sealed class FakeUser : AppUser
+        {
+            public override int Id { get; set; } = -1;
+            public override string UserName { get; set; } = "NotAuthorized";
         }
 
         public IEnumerable<AppUser> GetUsers()

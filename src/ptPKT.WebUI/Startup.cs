@@ -13,17 +13,21 @@ using ptPKT.Infrastructure.Data;
 using ptPKT.SharedKernel;
 using System;
 using System.Reflection;
+using ptPKT.Core.Services;
 
 namespace ptPKT.WebUI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
         public IConfiguration Configuration { get; }
+
+        public IHostingEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
@@ -50,8 +54,6 @@ namespace ptPKT.WebUI
         {
             var builder = new ContainerBuilder();
 
-            //services.AddIdentity<>()
-
             builder.Populate(services);
 
             var webAssembly = Assembly.GetExecutingAssembly();
@@ -59,9 +61,14 @@ namespace ptPKT.WebUI
             var sharedAssembly = Assembly.GetAssembly(typeof(BaseEntity));
             var infrastructureAssembly = Assembly.GetAssembly(typeof(EfRepository)); // TODO: Move to Infrastucture Registry
 
-            builder.RegisterAssemblyTypes(webAssembly, coreAssembly, sharedAssembly, infrastructureAssembly).AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(webAssembly,
+                                          coreAssembly,
+                                          sharedAssembly,
+                                          infrastructureAssembly)
+                   .AsImplementedInterfaces();
 
-            IContainer container = builder.Build();
+            var container = builder.Build();
+
             return new AutofacServiceProvider(container);
         }
 
