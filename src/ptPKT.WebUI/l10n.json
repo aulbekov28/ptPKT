@@ -1,0 +1,11 @@
+﻿[
+  {
+    "Key": "Hello",
+    "LocalizedValue": {
+      "en-US": "Hello",
+      "ru-RU": "Здравствуйте",
+      "ja-JP": "こんにちは",
+      "kz-KZ": "Сәлеметсіз бе"
+    }
+  }
+]

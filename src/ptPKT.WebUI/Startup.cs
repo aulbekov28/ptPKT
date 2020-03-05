@@ -12,7 +12,11 @@ using ptPKT.Core.Identity;
 using ptPKT.Infrastructure.Data;
 using ptPKT.SharedKernel;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
+using System.Text;
+using Askmethat.Aspnet.JsonLocalizer.Extensions;
 using ptPKT.Core.Services;
 
 namespace ptPKT.WebUI
@@ -36,6 +40,19 @@ namespace ptPKT.WebUI
 
             services.AddEntityFrameworkNpgsql()
                     .AddDbContext<AppDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString(nameof(AppDbContext))));
+
+            services.AddJsonLocalization(option =>
+            {
+                option.CacheDuration = TimeSpan.FromHours(3);
+                option.ResourcesPath = $"{Environment.WebRootPath}/Resources/";
+                option.SupportedCultureInfos = new HashSet<CultureInfo>()
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("ru-RU"),
+                    new CultureInfo("jp-JP"),
+                    new CultureInfo("kz-KZ"),
+                };
+            });
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
