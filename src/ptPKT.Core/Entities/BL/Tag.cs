@@ -1,7 +1,7 @@
-﻿using ptPKT.SharedKernel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using ptPKT.SharedKernel;
 
-namespace ptPKT.Core.Entities
+namespace ptPKT.Core.Entities.BL
 {
     public class Tag : BaseEntity
     {

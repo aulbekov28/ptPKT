@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.Localization;
 
-namespace ptPKT.SharedKernel
+namespace ptPKT.Infrastructure.localization
 {
     public class JsonStringLocalizerFactory : IStringLocalizerFactory
     {

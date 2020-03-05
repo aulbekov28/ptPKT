@@ -1,4 +1,4 @@
-﻿using ptPKT.Core.Identity;
+﻿using ptPKT.Core.Entities.Identity;
 
 namespace ptPKT.Tests
 {

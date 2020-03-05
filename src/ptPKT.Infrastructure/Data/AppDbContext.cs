@@ -1,18 +1,20 @@
-﻿using System;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ptPKT.Core.Entities;
-using ptPKT.SharedKernel.Interfaces;
-using System.Reflection;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using ptPKT.Core.Identity;
+using ptPKT.Core.Entities.BL;
+using ptPKT.Core.Entities.Identity;
+using ptPKT.Core.Interfaces;
 using ptPKT.SharedKernel;
+using ptPKT.SharedKernel.Interfaces;
+using System;
+using System.Linq;
+using System.Reflection;
 
 namespace ptPKT.Infrastructure.Data
 {
     public class AppDbContext : IdentityDbContext<AppUser,AppRole,int>
     {
-        public readonly IDomainEventDispatcher _dispatcher;
+        private readonly IDomainEventDispatcher _dispatcher;
+        private readonly IEnvironmentContext _environmentContext;
 
         public AppDbContext() { }
 
@@ -24,21 +26,27 @@ namespace ptPKT.Infrastructure.Data
             _dispatcher = dispatcher;
         }
 
+        public AppDbContext(DbContextOptions<AppDbContext> options, IDomainEventDispatcher dispatcher, IEnvironmentContext environmentContext)
+            : base(options)
+        {
+            _dispatcher = dispatcher;
+            _environmentContext = environmentContext;
+        }
+
         public DbSet<ToDoItem> ToDoItems { get; set; }
+        public DbSet<Article> Articles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            //modelBuilder.ApplyConfigurationFromCurrentAssembly();
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
         public override int SaveChanges()
         {
-            //TODO modified by,created by. Or nove it to reposirory?
             var now = DateTime.Now;
+            var modifierId = _environmentContext.GetCurrentUser().Id;
             var changeSet = ChangeTracker.Entries<BaseEntity>();
 
             foreach (var changedItem in changeSet)
@@ -48,12 +56,12 @@ namespace ptPKT.Infrastructure.Data
                     case EntityState.Added:
                         changedItem.Entity.CreateDate = now;
                         changedItem.Entity.ModifyDate = now;
-                        //changedItem.Entity.CreatorId = 
-                        //changedItem.Entity.ModifierId = 
+                        changedItem.Entity.OwnerId = modifierId;
+                        changedItem.Entity.ModifiedBy = modifierId;
                         break;
                     case EntityState.Modified:
                         changedItem.Entity.ModifyDate = now;
-                        //changedItem.Entity.ModifierId = 
+                        changedItem.Entity.ModifiedBy = modifierId;
                         break;
                 }
             }

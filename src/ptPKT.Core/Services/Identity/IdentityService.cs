@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using ptPKT.Core.Entities.Identity;
 using ptPKT.Core.Exceptions.Indentity;
-using ptPKT.Core.Identity;
 using ptPKT.Core.Interfaces.Identity;
 
 namespace ptPKT.Core.Services.Identity
 {
-    public class AccountService : IAccountService
+    public partial class IdentityService : IIdentityService
     {
         private readonly UserManager<AppUser> _userManager;
 
-        public AccountService(UserManager<AppUser> userManager)
+        public IdentityService(UserManager<AppUser> userManager)
         {
             _userManager = userManager;
         }
@@ -55,7 +56,7 @@ namespace ptPKT.Core.Services.Identity
             var result = await _userManager.CreateAsync(newUser, model.Password);
 
             if (!result.Succeeded)
-                throw new AppUserCreationException(result.Errors);
+                throw new AppUserIdentityException(result.Errors);
 
             var response = new UserLoginResult()
             {
@@ -70,7 +71,7 @@ namespace ptPKT.Core.Services.Identity
 
         public UserLoginResult SignOut()
         {
-            var nullUser = new FakeUser();
+            var nullUser = new NullUser();
             return new UserLoginResult()
             {
                 Id = nullUser.Id,
@@ -78,30 +79,51 @@ namespace ptPKT.Core.Services.Identity
             };
         }
 
-        public sealed class FakeUser : AppUser
+        public async Task ConfirmEmailAsync(int id,string confirmationToken)
         {
-            public override int Id { get; set; } = -1;
-            public override string UserName { get; set; } = "NotAuthorized";
+            var user = GetUserById(id);
+            var result = await _userManager.ConfirmEmailAsync(user, confirmationToken);
+
+            if (!result.Succeeded)
+                throw new AppUserIdentityException(result.Errors);
         }
 
-        public IEnumerable<AppUser> GetUsers()
+        public async Task<string> ForgotPasswordAsync(ForgotPasswordModel model)
         {
-            return _userManager.Users;
+            var user = GetUserByEmail(model.Email);
+
+            var passwordResetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            return passwordResetToken;
         }
 
-        public async Task ConfirmEmailAsync(string confirmationToken)
+        public async Task ResetPasswordAsync(ResetPasswordModel model)
         {
-            throw new NotImplementedException();
+            var user = GetUserByEmail(model.Email);
+
+            var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+            if (!result.Succeeded)
+                throw new AppUserIdentityException(result.Errors);
         }
 
-        public async Task ForgotPasswordAsync(UserLoginModel user)
+        public async Task<UserLoginResult> ChangeEmailAsync(ChangeEmailModel model)
         {
-            throw new NotImplementedException();
-        }
+            var user = GetUserById(model.Id);
+            var result = await _userManager.ChangeEmailAsync(user, model.NewEmail, model.Token);
+            
+            if (!result.Succeeded)
+                throw new AppUserIdentityException(result.Errors);
 
-        public async Task<UserLoginResult> ResetPasswordAsync(UserLoginModel user)
-        {
-            throw new NotImplementedException();
+            var response = new UserLoginResult()
+            {
+                Id = user.Id,
+                SecondName = user.SecondName,
+                FirstName = user.FirstName,
+                UserName = user.UserName,
+                Token = GenerateToken(user)
+            };
+
+            return response;
         }
 
         private static string GenerateToken(AppUser user)
@@ -123,6 +145,29 @@ namespace ptPKT.Core.Services.Identity
                 signingCredentials: creds
             );
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        private async Task ValidateUser(AppUser user)
+        {
+            if (user == null)
+                throw new AppUserNotFoundException();
+
+            if (!await _userManager.IsEmailConfirmedAsync(user))
+                throw new EmailNotConfirmedException();
+
+            var lockoutEndDate = await _userManager.GetLockoutEndDateAsync(user);
+            if (lockoutEndDate.HasValue && lockoutEndDate.Value > DateTimeOffset.Now)
+                throw new UserIsLockedException();
+        }
+
+        private AppUser GetUserByEmail(string email)
+        {
+            return _userManager.FindByEmailAsync(email).Result;
+        }
+
+        private AppUser GetUserById(int id)
+        {
+            return _userManager.Users.Single(x => x.Id == id);
         }
     }
 }

@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using ptPKT.Core.Identity;
 using ptPKT.WebUI.Controllers;
 using ptPKT.WebUI.Models;
 using System;
 using System.Threading.Tasks;
+using ptPKT.Core.Entities.Identity;
 using ptPKT.Core.Interfaces.Identity;
 using ptPKT.Core.Services.Identity;
 using Xunit;
@@ -14,7 +14,7 @@ namespace ptPKT.Tests
 {
     public class AccountTests
     {
-        private readonly IAccountService _accountService;
+        private readonly IIdentityService _identityService;
  
         public AccountTests()
         {
@@ -38,7 +38,7 @@ namespace ptPKT.Tests
             //TODO https://stackoverflow.com/questions/49165810/how-to-mock-usermanager-in-net-core-testing/49174248
 
             var userManager = userMgr.Object;
-            _accountService = new AccountService(userManager);
+            _identityService = new IdentityService(userManager);
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace ptPKT.Tests
                 Password = user.Password
             };
 
-            var controller = new AccountController(_accountService);
+            var controller = new AccountController(_identityService);
 
             var result = await controller.SignIn(loginModel);
             Assert.IsType<OkObjectResult>(result);
@@ -67,7 +67,7 @@ namespace ptPKT.Tests
                 Password = user.Password
             };
 
-            var controller = new AccountController(_accountService);
+            var controller = new AccountController(_identityService);
 
             var result = await controller.SignIn(loginModel);
             Assert.IsType<BadRequestObjectResult>(result);
@@ -83,7 +83,7 @@ namespace ptPKT.Tests
                 Password = user.Password
             };
 
-            var controller = new AccountController(_accountService);
+            var controller = new AccountController(_identityService);
 
             var result = await controller.SignIn(loginModel);
             Assert.IsType<BadRequestObjectResult>(result);
@@ -102,7 +102,7 @@ namespace ptPKT.Tests
                 SecondName = user.SecondName,
             };
 
-            var controller = new AccountController(_accountService);
+            var controller = new AccountController(_identityService);
 
             var result = await controller.SignUp(registerModel);
             Assert.IsType<OkObjectResult>(result);

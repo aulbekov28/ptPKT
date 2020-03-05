@@ -1,5 +1,6 @@
 using ptPKT.Core.Entities;
 using System.Linq;
+using ptPKT.Core.Entities.BL;
 using ptPKT.Tests;
 using Xunit;
 

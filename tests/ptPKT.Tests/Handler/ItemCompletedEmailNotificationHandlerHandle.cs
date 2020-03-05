@@ -1,19 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CleanArchitecture.Core.Events;
-using ptPKT.Core.Entities;
+﻿using ptPKT.Core.Entities.BL;
 using ptPKT.Core.Events;
+using ptPKT.Core.Handlers;
+using System;
+using ptPKT.Core.Interfaces;
 using Xunit;
 
 namespace ptPKT.Tests.Handler
 {
     public class ItemCompletedEmailNotificationHandlerHandle
     {
+        private readonly IEmailSender _emailSender;
+
+        public ItemCompletedEmailNotificationHandlerHandle()
+        {
+            _emailSender = MockHelper.MockEmailSender().Object;
+        }
+
+
         [Fact]
         public void ThrowsExceptionGivenNullEventArgument()
         {
-            var handler = new ItemCompletedEmailNotificationHandler();
+            var handler = new ItemCompletedEmailNotificationHandler(_emailSender);
 
             Exception ex = Assert.Throws<ArgumentNullException>(() => handler.Handle(null));
         }
@@ -21,7 +28,7 @@ namespace ptPKT.Tests.Handler
         [Fact]
         public void DoesNothingGivenEventInstance()
         {
-            var handler = new ItemCompletedEmailNotificationHandler();
+            var handler = new ItemCompletedEmailNotificationHandler(_emailSender);
 
             handler.Handle(new ToDoItemCompletedEvent(new ToDoItem()));
         }

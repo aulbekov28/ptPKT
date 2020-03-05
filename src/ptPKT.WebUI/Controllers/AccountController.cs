@@ -12,11 +12,11 @@ namespace ptPKT.WebUI.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IAccountService _accountService;
+        private readonly IIdentityService _identityService;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IIdentityService identityService)
         {
-            _accountService = accountService;
+            _identityService = identityService;
         }
 
         [HttpPost]
@@ -26,7 +26,7 @@ namespace ptPKT.WebUI.Controllers
                 return BadRequest(ModelState);
             try
             {
-                var response = await _accountService.SignIn(model);
+                var response = await _identityService.SignIn(model);
                 return Ok(response);
             }
             catch (AppUserNotFoundException)
@@ -47,10 +47,10 @@ namespace ptPKT.WebUI.Controllers
 
             try
             {
-                var response = await _accountService.SignUp(model);
+                var response = await _identityService.SignUp(model);
                 return Ok(response);
             }
-            catch (AppUserCreationException)
+            catch (AppUserIdentityException)
             {
                 // 
             }
@@ -62,18 +62,9 @@ namespace ptPKT.WebUI.Controllers
         [Authorize]
         public IActionResult SignOut()
         {
-            var result = _accountService.SignOut();
+            var result = _identityService.SignOut();
 
             return Ok(result);
-        }
-
-
-        [HttpGet]
-        [Authorize]
-        public IActionResult UserList()
-        {
-            var users = _accountService.GetUsers();
-            return Ok(users);
         }
     }
 }

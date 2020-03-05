@@ -3,6 +3,7 @@ using ptPKT.Tests;
 using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using ptPKT.Core.Entities.BL;
 using Xunit;
 
 namespace ptPKT.IntegrationTests.Data

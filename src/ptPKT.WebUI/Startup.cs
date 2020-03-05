@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using ptPKT.Core.Identity;
 using ptPKT.Infrastructure.Data;
 using ptPKT.SharedKernel;
 using System;
@@ -17,6 +16,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Text;
 using Askmethat.Aspnet.JsonLocalizer.Extensions;
+using ptPKT.Core.Entities.Identity;
 using ptPKT.Core.Services;
 
 namespace ptPKT.WebUI

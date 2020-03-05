@@ -5,7 +5,7 @@ using System.Linq;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 
-namespace ptPKT.SharedKernel
+namespace ptPKT.Infrastructure.localization
 {
     public class JsonStringLocalizer : IStringLocalizer
     {

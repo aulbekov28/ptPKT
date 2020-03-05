@@ -5,21 +5,32 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ptPKT.Core.Exceptions.Indentity
 {
-    public class AppUserNotFoundException : Exception
+    public class IdentityException : Exception
     {
     }
 
-    public class AppUserIncorrectPasswordException : Exception
+    public class AppUserNotFoundException : IdentityException
     {
     }
 
-    public class AppUserCreationException : Exception
+    public class AppUserIncorrectPasswordException : IdentityException
     {
-        public AppUserCreationException()
+    }
+    public class EmailNotConfirmedException : IdentityException
+    {
+    }
+
+    public class UserIsLockedException : IdentityException
+    {
+    }
+
+    public class AppUserIdentityException : Exception
+    {
+        public AppUserIdentityException()
         {
         }
 
-        public AppUserCreationException(IEnumerable<IdentityError> errors)
+        public AppUserIdentityException(IEnumerable<IdentityError> errors)
         {
             Errors = errors;
         }

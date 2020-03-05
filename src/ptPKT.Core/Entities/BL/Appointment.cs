@@ -1,7 +1,7 @@
 ﻿using System;
 using ptPKT.SharedKernel;
 
-namespace ptPKT.Core.Entities
+namespace ptPKT.Core.Entities.BL
 {
     public class Appointment : BaseEntity<Guid>
     {

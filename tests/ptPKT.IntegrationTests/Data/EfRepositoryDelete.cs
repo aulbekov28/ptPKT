@@ -1,6 +1,7 @@
 using ptPKT.Core.Entities;
 using ptPKT.Tests;
 using System;
+using ptPKT.Core.Entities.BL;
 using Xunit;
 
 namespace ptPKT.IntegrationTests.Data

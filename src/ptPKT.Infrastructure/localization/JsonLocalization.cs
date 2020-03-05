@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ptPKT.SharedKernel
+namespace ptPKT.Infrastructure.localization
 {
     // Neend to test
     // https://github.com/AlexTeixeira/Askmethat-Aspnet-JsonLocalizer

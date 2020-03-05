@@ -1,7 +1,7 @@
-﻿using ptPKT.SharedKernel;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ptPKT.SharedKernel;
 
-namespace ptPKT.Core.Entities
+namespace ptPKT.Core.Entities.BL
 {
     public class PurchaseOrder : BaseEntity
     {

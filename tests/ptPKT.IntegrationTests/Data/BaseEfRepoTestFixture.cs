@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using ptPKT.Infrastructure.Data;
 using ptPKT.SharedKernel.Interfaces;
 using Moq;
+using ptPKT.Core.Interfaces;
+using ptPKT.Core.Services.Identity;
+using ptPKT.Tests;
 
 namespace ptPKT.IntegrationTests
 {
@@ -31,8 +34,9 @@ namespace ptPKT.IntegrationTests
         {
             var options = CreateNewContextOptions();
             var mockDispatcher = new Mock<IDomainEventDispatcher>();
+            var mockEnvironment = MockHelper.MockEnvironmentContext();
 
-            _dbContext = new AppDbContext(options, mockDispatcher.Object);
+            _dbContext = new AppDbContext(options, mockDispatcher.Object, mockEnvironment.Object);
             return new EfRepository(_dbContext);
         }
 

@@ -3,6 +3,7 @@ using ptPKT.SharedKernel.Interfaces;
 using ptPKT.Core.Entities;
 using ptPKT.WebUI.Models;
 using System.Linq;
+using ptPKT.Core.Entities.BL;
 
 namespace ptPKT.WebUI.Controllers
 {

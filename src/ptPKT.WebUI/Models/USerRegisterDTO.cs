@@ -6,7 +6,7 @@ namespace ptPKT.WebUI.Models
     [Obsolete]
     public class UserRegisterDto
     {
-        [Required(ErrorMessage = "Email")]
+        [Required(ErrorMessage = "NewEmail")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Password")]

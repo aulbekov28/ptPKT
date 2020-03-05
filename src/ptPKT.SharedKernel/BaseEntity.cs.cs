@@ -8,7 +8,10 @@ namespace ptPKT.SharedKernel
         public TId Id { get; private set; }
 
         public List<BaseDomainEvent> Events = new List<BaseDomainEvent>();
-        
+
+        public int OwnerId { get; set; }
+        public int ModifiedBy { get; set; }
+
         protected BaseEntity(TId id)
         {
             Id = id;
@@ -41,6 +44,6 @@ namespace ptPKT.SharedKernel
 
         public DateTime CreateDate { get; set; }
         public DateTime ModifyDate { get; set; }
-        public bool isDeleted { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

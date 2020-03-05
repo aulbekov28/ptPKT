@@ -155,7 +155,7 @@ namespace ptPKT.Infrastructure.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
-                    b.Property<string>("Email")
+                    b.Property<string>("NewEmail")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");

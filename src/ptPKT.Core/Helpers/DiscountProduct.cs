@@ -1,4 +1,5 @@
 ﻿using ptPKT.Core.Entities;
+using ptPKT.Core.Entities.BL;
 
 namespace ptPKT.Core.Helpers
 {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ptPKT.Core.Entities
+namespace ptPKT.Core.Entities.BL
 {
     public class ProductGood : Product
     {

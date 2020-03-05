@@ -1,7 +1,7 @@
-﻿using ptPKT.Core.Identity;
+﻿using ptPKT.Core.Entities.Identity;
 using ptPKT.SharedKernel;
 
-namespace ptPKT.Core.Entities
+namespace ptPKT.Core.Entities.BL
 {
     public class Like : BaseEntity
     {

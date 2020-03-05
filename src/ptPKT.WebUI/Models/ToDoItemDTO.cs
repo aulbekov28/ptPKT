@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using ptPKT.Core.Entities;
+using ptPKT.Core.Entities.BL;
 
 namespace ptPKT.WebUI.Models
 {

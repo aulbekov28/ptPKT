@@ -1,4 +1,5 @@
 ﻿using ptPKT.Core.Entities;
+using ptPKT.Core.Entities.BL;
 using ptPKT.SharedKernel;
 
 namespace ptPKT.Core.Events
