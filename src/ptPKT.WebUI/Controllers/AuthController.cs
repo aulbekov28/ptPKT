@@ -11,15 +11,15 @@ namespace ptPKT.WebUI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly IIdentityService _identityService;
-        private readonly ILogger _logger;
+        private readonly ILogger<AuthController> _logger;
 
-        public AccountController(IIdentityService identityService)
+        public AuthController(IIdentityService identityService)
         {
             _identityService = identityService;
-            
+
         }
 
         [HttpPost]
