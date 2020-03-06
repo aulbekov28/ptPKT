@@ -19,25 +19,9 @@ namespace ptPKT.Tests
         public AccountTests()
         {
             Environment.SetEnvironmentVariable("JWT_SECRET", "verysecrettestjwtkeythatnoonewilleverknow");
-            var userStoreMock = Mock.Of<IUserStore<AppUser>>();
-            var userMgr = new Mock<UserManager<AppUser>>(userStoreMock, null, null, null, null, null, null, null, null);
 
-            var defaultAppUser = new AppUserBuilder().Build();
+            var userManager = MockHelper.UserManagerMock().Object;
 
-            var user = defaultAppUser.GetAppUser();
-
-            var newFakeAppUserAppUser = new AppUserBuilder().NewUserRegistration().Build();
-
-            var tcs = new TaskCompletionSource<AppUser>();
-            tcs.SetResult(user);
-
-            userMgr.Setup(x => x.FindByEmailAsync(user.Email)).Returns(tcs.Task);
-            userMgr.Setup(x => x.CheckPasswordAsync(user, defaultAppUser.Password)).Returns(Task.FromResult(true));
-            userMgr.Setup(x => x.CreateAsync(It.IsAny<AppUser>(), It.IsAny<string>())).Returns(Task.FromResult(IdentityResult.Success));
-
-            //TODO https://stackoverflow.com/questions/49165810/how-to-mock-usermanager-in-net-core-testing/49174248
-
-            var userManager = userMgr.Object;
             _identityService = new IdentityService(userManager);
         }
 

@@ -34,7 +34,7 @@ namespace ptPKT.IntegrationTests
         {
             var options = CreateNewContextOptions();
             var mockDispatcher = new Mock<IDomainEventDispatcher>();
-            var mockEnvironment = MockHelper.MockEnvironmentContext();
+            var mockEnvironment = MockHelper.EnvironmentContextMock();
 
             _dbContext = new AppDbContext(options, mockDispatcher.Object, mockEnvironment.Object);
             return new EfRepository(_dbContext);

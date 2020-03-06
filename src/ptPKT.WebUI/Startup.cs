@@ -16,8 +16,10 @@ using System.Globalization;
 using System.Reflection;
 using System.Text;
 using Askmethat.Aspnet.JsonLocalizer.Extensions;
+using Microsoft.Extensions.Localization;
 using ptPKT.Core.Entities.Identity;
 using ptPKT.Core.Services;
+using ptPKT.Infrastructure.localization;
 
 namespace ptPKT.WebUI
 {
@@ -77,6 +79,9 @@ namespace ptPKT.WebUI
             var coreAssembly = Assembly.GetAssembly(typeof(AppRole));
             var sharedAssembly = Assembly.GetAssembly(typeof(BaseEntity));
             var infrastructureAssembly = Assembly.GetAssembly(typeof(EfRepository)); // TODO: Move to Infrastucture Registry
+
+            builder.RegisterType<IStringLocalizerFactory>().As<JsonStringLocalizerFactory>().SingleInstance();
+            builder.RegisterType<IStringLocalizer>().As<JsonStringLocalizerFactory>().SingleInstance();
 
             builder.RegisterAssemblyTypes(webAssembly,
                                           coreAssembly,

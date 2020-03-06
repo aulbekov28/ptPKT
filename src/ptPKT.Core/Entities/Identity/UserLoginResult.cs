@@ -1,4 +1,4 @@
-﻿namespace ptPKT.Core.Services.Identity
+﻿namespace ptPKT.Core.Entities.Identity
 {
     public class UserLoginResult
     {

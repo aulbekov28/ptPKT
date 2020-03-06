@@ -13,7 +13,7 @@ namespace ptPKT.Tests.Handler
 
         public ItemCompletedEmailNotificationHandlerHandle()
         {
-            _emailSender = MockHelper.MockEmailSender().Object;
+            _emailSender = MockHelper.EmailSenderMock().Object;
         }
 
 

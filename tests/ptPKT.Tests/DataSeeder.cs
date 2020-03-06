@@ -30,7 +30,7 @@ namespace ptPKT.Tests
 
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            var mockEnvironment = MockHelper.MockEnvironmentContext();
+            var mockEnvironment = MockHelper.EnvironmentContextMock();
 
             using (var dbContext = new AppDbContext(serviceProvider.GetRequiredService<DbContextOptions<AppDbContext>>(), 
                                                     null,

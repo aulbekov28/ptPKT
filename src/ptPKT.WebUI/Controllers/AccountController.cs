@@ -5,6 +5,7 @@ using ptPKT.Core.Interfaces.Identity;
 using ptPKT.Core.Services.Identity;
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace ptPKT.WebUI.Controllers
 {
@@ -13,10 +14,12 @@ namespace ptPKT.WebUI.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IIdentityService _identityService;
+        private readonly ILogger _logger;
 
         public AccountController(IIdentityService identityService)
         {
             _identityService = identityService;
+            
         }
 
         [HttpPost]
@@ -37,6 +40,11 @@ namespace ptPKT.WebUI.Controllers
             {
                 return Unauthorized();
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex);
+            }
         }
 
         [HttpPost]
@@ -52,10 +60,13 @@ namespace ptPKT.WebUI.Controllers
             }
             catch (AppUserIdentityException)
             {
-                // 
+                return Unauthorized();
             }
-
-            return Unauthorized();
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex);
+            }
         }
 
         [HttpGet]
