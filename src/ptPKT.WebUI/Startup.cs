@@ -80,14 +80,14 @@ namespace ptPKT.WebUI
             var sharedAssembly = Assembly.GetAssembly(typeof(BaseEntity));
             var infrastructureAssembly = Assembly.GetAssembly(typeof(EfRepository)); // TODO: Move to Infrastucture Registry
 
-            builder.RegisterType<IStringLocalizerFactory>().As<JsonStringLocalizerFactory>().SingleInstance();
-            builder.RegisterType<IStringLocalizer>().As<JsonStringLocalizerFactory>().SingleInstance();
-
             builder.RegisterAssemblyTypes(webAssembly,
                                           coreAssembly,
                                           sharedAssembly,
                                           infrastructureAssembly)
                    .AsImplementedInterfaces();
+
+            builder.RegisterType<IStringLocalizerFactory>().As<JsonStringLocalizerFactory>().SingleInstance();
+            builder.RegisterType<IStringLocalizer>().As<JsonStringLocalizer>().SingleInstance();
 
             var container = builder.Build();
 
