@@ -14,8 +14,7 @@ namespace ptPKT.Infrastructure.localization
         {
             //read all json file
             JsonSerializer serializer = new JsonSerializer();
-            localization = JsonConvert.DeserializeObject<List<JsonLocalization>>(File.ReadAllText(@"l10n.json"));
-
+            localization = JsonConvert.DeserializeObject<List<JsonLocalization>>(File.ReadAllText(@"wwwroot\Resources\l10n.json"));
         }
 
         public LocalizedString this[string name]

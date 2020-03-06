@@ -86,8 +86,8 @@ namespace ptPKT.WebUI
                                           infrastructureAssembly)
                    .AsImplementedInterfaces();
 
-            builder.RegisterType<IStringLocalizerFactory>().As<JsonStringLocalizerFactory>().SingleInstance();
-            builder.RegisterType<IStringLocalizer>().As<JsonStringLocalizer>().SingleInstance();
+            // builder.RegisterType<IStringLocalizerFactory>().As<JsonStringLocalizerFactory>().SingleInstance();
+            // builder.RegisterType<IStringLocalizer>().As<JsonStringLocalizer>().SingleInstance();
 
             var container = builder.Build();
 
