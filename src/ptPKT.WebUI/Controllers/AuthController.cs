@@ -14,12 +14,10 @@ namespace ptPKT.WebUI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IIdentityService _identityService;
-        private readonly ILogger<AuthController> _logger;
 
         public AuthController(IIdentityService identityService)
         {
             _identityService = identityService;
-
         }
 
         [HttpPost]
@@ -42,7 +40,6 @@ namespace ptPKT.WebUI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
                 return StatusCode(500, ex);
             }
         }
@@ -64,7 +61,6 @@ namespace ptPKT.WebUI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
                 return StatusCode(500, ex);
             }
         }
