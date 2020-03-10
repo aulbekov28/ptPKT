@@ -15,6 +15,7 @@ namespace ptPKT.Core.Exceptions.Indentity
     public class AppUserIncorrectPasswordException : IdentityException
     {
     }
+
     public class EmailNotConfirmedException : IdentityException
     {
     }

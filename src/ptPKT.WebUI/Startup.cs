@@ -1,3 +1,4 @@
+using Askmethat.Aspnet.JsonLocalizer.Extensions;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
@@ -8,18 +9,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using ptPKT.Core.Entities.Identity;
 using ptPKT.Infrastructure.Data;
 using ptPKT.SharedKernel;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
-using System.Text;
-using Askmethat.Aspnet.JsonLocalizer.Extensions;
-using Microsoft.Extensions.Localization;
-using ptPKT.Core.Entities.Identity;
-using ptPKT.Core.Services;
-using ptPKT.Infrastructure.localization;
+using ptPKT.WebUI.Middlewares;
 
 namespace ptPKT.WebUI
 {
@@ -38,23 +35,14 @@ namespace ptPKT.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddEntityFrameworkNpgsql()
-                    .AddDbContext<AppDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString(nameof(AppDbContext))));
+            services.AddDatabase(Configuration.GetConnectionString(nameof(AppDbContext)));
 
-            services.AddJsonLocalization(option =>
-            {
-                option.CacheDuration = TimeSpan.FromHours(3);
-                option.ResourcesPath = $"{Environment.WebRootPath}/Resources/";
-                option.SupportedCultureInfos = new HashSet<CultureInfo>()
-                {
-                    new CultureInfo("en-US"),
-                    new CultureInfo("ru-RU"),
-                    new CultureInfo("jp-JP"),
-                    new CultureInfo("kz-KZ"),
-                };
-            });
+            services.AddLocalization($"{Environment.WebRootPath}/Resources/");
+
+            services.AddJwtAuthorization();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -108,15 +96,9 @@ namespace ptPKT.WebUI
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            app.UseCustomMiddlewaresPipeline();
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
-
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
+            app.EnableSwagger();
 
             app.UseMvc(routes =>
             {
@@ -133,6 +115,48 @@ namespace ptPKT.WebUI
                 {
                     spa.UseAngularCliServer(npmScript: "start");
                 }
+            });
+        }
+    }
+
+    internal static class StartupExtensions
+    {
+        public static void AddDatabase(this IServiceCollection services, string connectionString)
+        {
+            services.AddEntityFrameworkNpgsql()
+                .AddDbContext<AppDbContext>(opt => opt.UseNpgsql(connectionString));
+        }
+
+        public static void AddLocalization(this IServiceCollection services, string resourcePath)
+        {
+            services.AddJsonLocalization(option =>
+            {
+                option.CacheDuration = TimeSpan.FromDays(1);
+                option.ResourcesPath = resourcePath;
+                option.SupportedCultureInfos = new HashSet<CultureInfo>()
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("ru-RU"),
+                    new CultureInfo("jp-JP"),
+                    new CultureInfo("kz-KZ"),
+                };
+            });
+        }
+
+        public static void UseCustomMiddlewaresPipeline(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<ExceptionMiddleware>();
+        }
+
+        public static void EnableSwagger(this IApplicationBuilder app)
+        {
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
         }
     }

@@ -25,23 +25,9 @@ namespace ptPKT.WebUI.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            try
-            {
-                var response = await _identityService.SignIn(model);
-                return Ok(response);
-            }
-            catch (AppUserNotFoundException)
-            {
-                return Unauthorized();
-            }
-            catch (AppUserIncorrectPasswordException)
-            {
-                return Unauthorized();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex);
-            }
+
+            var response = await _identityService.SignIn(model);
+            return Ok(response);
         }
 
         [HttpPost]
@@ -50,19 +36,8 @@ namespace ptPKT.WebUI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            try
-            {
-                var response = await _identityService.SignUp(model);
-                return Ok(response);
-            }
-            catch (AppUserIdentityException)
-            {
-                return Unauthorized();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex);
-            }
+            var response = await _identityService.SignUp(model);
+            return Ok(response);
         }
 
         [HttpGet]
