@@ -44,9 +44,9 @@ namespace ptPKT.WebUI.Middlewares
 
             switch (exception)
             {
-                case AppUserNotFoundException userNotFoundException:
+                case UserNotFound userNotFoundException:
                 case EmailNotConfirmedException emailNotConfirmedException:
-                case AppUserIncorrectPasswordException userIncorrectPasswordException:
+                case IncorrectCredentialsException userIncorrectPasswordException:
                     httpStatusCode = HttpStatusCode.Unauthorized;
                     break;
                 case UserIsLockedException userIsLockedExceptionException:

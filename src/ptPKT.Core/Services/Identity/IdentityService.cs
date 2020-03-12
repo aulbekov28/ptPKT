@@ -26,11 +26,11 @@ namespace ptPKT.Core.Services.Identity
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
-                throw new AppUserNotFoundException();
+                throw new UserNotFound();
 
             var result = await _userManager.CheckPasswordAsync(user, model.Password);
             if (!result)
-                throw new AppUserIncorrectPasswordException();
+                throw new IncorrectCredentialsException();
 
             var response = new UserLoginResult()
             {
@@ -150,7 +150,7 @@ namespace ptPKT.Core.Services.Identity
         private async Task ValidateUser(AppUser user)
         {
             if (user == null)
-                throw new AppUserNotFoundException();
+                throw new UserNotFound();
 
             if (!await _userManager.IsEmailConfirmedAsync(user))
                 throw new EmailNotConfirmedException();
