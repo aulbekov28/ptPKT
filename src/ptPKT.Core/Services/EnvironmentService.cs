@@ -8,17 +8,17 @@ using ptPKT.Core.Interfaces;
 
 namespace ptPKT.Core.Services
 {
-    public class EnvironmentContext : IEnvironmentContext
+    public class EnvironmentService : IEnvironmentService
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IHttpContextAccessor _contextAccessor;
         private AppUser _currentUser;
 
-        public EnvironmentContext(UserManager<AppUser> userManager,
-                                  IHttpContextAccessor contextAccessor)
+        // TODO Fix this
+        public EnvironmentService(IHttpContextAccessor contextAccessor, UserManager<AppUser> userManager)
         {
-            _userManager = userManager;
             _contextAccessor = contextAccessor;
+            _userManager = userManager;
         }
 
         public AppUser GetCurrentUser()

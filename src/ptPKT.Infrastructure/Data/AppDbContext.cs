@@ -14,7 +14,7 @@ namespace ptPKT.Infrastructure.Data
     public class AppDbContext : IdentityDbContext<AppUser,AppRole,int>
     {
         private readonly IDomainEventDispatcher _dispatcher;
-        private readonly IEnvironmentContext _environmentContext;
+        private readonly IEnvironmentService _environmentService;
 
         public AppDbContext() { }
 
@@ -26,11 +26,11 @@ namespace ptPKT.Infrastructure.Data
             _dispatcher = dispatcher;
         }
 
-        public AppDbContext(DbContextOptions options, IDomainEventDispatcher dispatcher, IEnvironmentContext environmentContext)
+        public AppDbContext(DbContextOptions options, IDomainEventDispatcher dispatcher, IEnvironmentService environmentService)
             : base(options)
         {
             _dispatcher = dispatcher;
-            _environmentContext = environmentContext;
+            _environmentService = environmentService;
         }
 
         public DbSet<ToDoItem> ToDoItems { get; set; }
@@ -47,7 +47,7 @@ namespace ptPKT.Infrastructure.Data
         public override int SaveChanges()
         {
             var now = DateTime.Now;
-            var modifierId = _environmentContext.GetCurrentUser().Id;
+            var user = _environmentService.GetCurrentUser();
             var changeSet = ChangeTracker.Entries<BaseEntity>();
 
             foreach (var changedItem in changeSet)
@@ -57,12 +57,12 @@ namespace ptPKT.Infrastructure.Data
                     case EntityState.Added:
                         changedItem.Entity.CreateDate = now;
                         changedItem.Entity.ModifyDate = now;
-                        changedItem.Entity.OwnerId = modifierId;
-                        changedItem.Entity.ModifiedBy = modifierId;
+                        changedItem.Entity.OwnerId = user.Id;
+                        changedItem.Entity.ModifiedBy = user.Id;
                         break;
                     case EntityState.Modified:
                         changedItem.Entity.ModifyDate = now;
-                        changedItem.Entity.ModifiedBy = modifierId;
+                        changedItem.Entity.ModifiedBy = user.Id;
                         break;
                 }
             }

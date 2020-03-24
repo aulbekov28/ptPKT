@@ -15,7 +15,7 @@ export class AuthenticationService {
     }
 
     login(email: string, password: string) {
-        return this.http.post<UserInfo>(`/api/Account/SignIn`, { email: email, password: password })
+        return this.http.post<UserInfo>(`/api/Auth/SignIn`, { email: email, password: password })
             .pipe(
                 map(user => {
                 // login successful if there's a jwt token in the response

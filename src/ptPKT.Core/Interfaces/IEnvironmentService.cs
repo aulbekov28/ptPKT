@@ -2,7 +2,7 @@
 
 namespace ptPKT.Core.Interfaces
 {
-    public interface IEnvironmentContext
+    public interface IEnvironmentService
     {
         AppUser GetCurrentUser();
     }

@@ -20,6 +20,8 @@ using System.Reflection;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using ptPKT.Core.Interfaces;
+using ptPKT.Core.Services;
 using ptPKT.WebUI.Mappings;
 using ptPKT.WebUI.Middlewares;
 
@@ -44,10 +46,12 @@ namespace ptPKT.WebUI
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDatabase(Configuration.GetConnectionString(nameof(AppDbContext)));
-            //services.AddEntityFrameworkNpgsql();
-            //services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString(nameof(AppDbContext))));
+
+            services.AddIdentity();
 
             services.AddLocalization($"{Environment.WebRootPath}/Resources/");
+
+            services.AddHttpContextAccessor();
 
             services.AddJwtAuthorization();
 
@@ -83,6 +87,10 @@ namespace ptPKT.WebUI
 
             // builder.RegisterType<IStringLocalizerFactory>().As<JsonStringLocalizerFactory>().SingleInstance();
             // builder.RegisterType<IStringLocalizer>().As<JsonStringLocalizer>().SingleInstance();
+
+            builder.RegisterType<UserManager<AppUser>>().AsSelf();
+
+            builder.RegisterType<EnvironmentService>().As<IEnvironmentService>();
 
             // Automapper
             var profiles = from t in typeof(MappingProfile).Assembly.GetTypes()
@@ -147,6 +155,26 @@ namespace ptPKT.WebUI
         {
             services.AddEntityFrameworkNpgsql()
                 .AddDbContext<AppDbContext>(opt => opt.UseNpgsql(connectionString));
+        }
+
+        public static void AddIdentity(this IServiceCollection services)
+        {
+            services.AddIdentity<AppUser, AppRole>(options =>
+            {
+                options.Password.RequiredLength = 8;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+
+                options.User.RequireUniqueEmail = false;
+
+                options.Lockout.AllowedForNewUsers = true;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(6);
+                options.Lockout.MaxFailedAccessAttempts = 3;
+            })
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
         }
 
         public static void AddLocalization(this IServiceCollection services, string resourcePath)

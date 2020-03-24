@@ -20,9 +20,9 @@ namespace ptPKT.Tests
             return mgr;
         }
 
-        public static Mock<IEnvironmentContext> EnvironmentContextMock()
+        public static Mock<IEnvironmentService> EnvironmentContextMock()
         {
-            var environmentContext = new Mock<IEnvironmentContext>();
+            var environmentContext = new Mock<IEnvironmentService>();
 
             var user = new AppUserBuilder().Build();
 

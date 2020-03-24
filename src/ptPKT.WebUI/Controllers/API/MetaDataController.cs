@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Microsoft.Extensions.Localization;
+using ptPKT.Core.Interfaces;
 
 namespace ptPKT.WebUI.Controllers.API
 {
     public class MetaDataController : BaseApiController
     {
-        private readonly IStringLocalizer _localizer;
+        private readonly IEnvironmentService _localizer;
 
-        public MetaDataController(IStringLocalizer localizer)
+        public MetaDataController(IEnvironmentService environmentService)
         {
-            _localizer = localizer;
+            _localizer = environmentService;
         }
 
         [HttpGet("/info")]
@@ -20,8 +21,6 @@ namespace ptPKT.WebUI.Controllers.API
 
             var creationDate = System.IO.File.GetCreationTime(assembly.Location);
             var version = FileVersionInfo.GetVersionInfo(assembly.Location).ProductVersion;
-
-            _localizer.GetString("Hello");
 
             return Ok($"Version: {version}, Last Updated: {creationDate}");
         }
