@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices.WindowsRuntime;
 using ptPKT.Core.Entities;
 using ptPKT.Core.Entities.BL;
 
@@ -20,6 +21,15 @@ namespace ptPKT.WebUI.Models
                 Title = item.Title,
                 Description = item.Description,
                 IsDone = item.IsDone
+            };
+        }
+
+        public ToDoItem ToTodoItem()
+        {
+            return new ToDoItem()
+            {
+                Title = Title,
+                Description = Description,
             };
         }
     }

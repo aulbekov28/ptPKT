@@ -1,4 +1,4 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
@@ -18,10 +18,11 @@
     "ptPKT.WebUI": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "JWT_SECRET": "VERYSECRETKEY",
+        "ASPNETCORE_ENVIRONMENT ": "Development"
+      },
+      "applicationUrl": "http://localhost:5000"
     }
   }
 }

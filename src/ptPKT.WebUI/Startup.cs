@@ -15,7 +15,12 @@ using ptPKT.SharedKernel;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
+using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using ptPKT.WebUI.Mappings;
 using ptPKT.WebUI.Middlewares;
 
 namespace ptPKT.WebUI
@@ -39,6 +44,8 @@ namespace ptPKT.WebUI
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDatabase(Configuration.GetConnectionString(nameof(AppDbContext)));
+            //services.AddEntityFrameworkNpgsql();
+            //services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString(nameof(AppDbContext))));
 
             services.AddLocalization($"{Environment.WebRootPath}/Resources/");
 
@@ -76,6 +83,21 @@ namespace ptPKT.WebUI
 
             // builder.RegisterType<IStringLocalizerFactory>().As<JsonStringLocalizerFactory>().SingleInstance();
             // builder.RegisterType<IStringLocalizer>().As<JsonStringLocalizer>().SingleInstance();
+
+            // Automapper
+            var profiles = from t in typeof(MappingProfile).Assembly.GetTypes()
+                           where typeof(Profile).IsAssignableFrom(t)
+                           select (Profile)Activator.CreateInstance(t);
+
+            builder.Register(ctx => new MapperConfiguration(cfg =>
+            {
+                foreach (var profile in profiles)
+                {
+                    cfg.AddProfile(profile);
+                }
+            }));
+
+            builder.Register(ctx => ctx.Resolve<MapperConfiguration>().CreateMapper()).As<IMapper>();
 
             var container = builder.Build();
 

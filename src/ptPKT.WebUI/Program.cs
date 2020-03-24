@@ -13,6 +13,13 @@ namespace ptPKT.WebUI
             {
                 var host = CreateWebHostBuilder(args)
                     .UseNLog()
+                    .ConfigureLogging(logging =>
+                    {
+                        logging.ClearProviders();
+                        logging.AddConsole();
+                        logging.AddDebug();
+                        logging.AddEventSourceLogger();
+                    })
                     .Build();
 
                 host.Run();
@@ -25,13 +32,11 @@ namespace ptPKT.WebUI
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>();
+
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .ConfigureLogging(logging =>
-                {
-                    logging.ClearProviders();
-                    logging.AddConsole();
-                    logging.AddDebug();
-                    logging.AddEventSourceLogger();
-                } );
+                .Build();
     }
 }

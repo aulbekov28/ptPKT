@@ -18,15 +18,15 @@ namespace ptPKT.Infrastructure.Data
 
         public AppDbContext() { }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+        public AppDbContext(DbContextOptions options) : base(options) { }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options, IDomainEventDispatcher dispatcher) 
+        public AppDbContext(DbContextOptions options, IDomainEventDispatcher dispatcher) 
             : base(options)
         {
             _dispatcher = dispatcher;
         }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options, IDomainEventDispatcher dispatcher, IEnvironmentContext environmentContext)
+        public AppDbContext(DbContextOptions options, IDomainEventDispatcher dispatcher, IEnvironmentContext environmentContext)
             : base(options)
         {
             _dispatcher = dispatcher;
@@ -35,6 +35,7 @@ namespace ptPKT.Infrastructure.Data
 
         public DbSet<ToDoItem> ToDoItems { get; set; }
         public DbSet<Article> Articles { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

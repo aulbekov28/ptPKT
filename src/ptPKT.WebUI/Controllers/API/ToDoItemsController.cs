@@ -37,11 +37,7 @@ namespace ptPKT.WebUI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] ToDoItemDTO item)
         {
-            var todoItem = new ToDoItem()
-            {
-                Title = item.Title,
-                Description = item.Description
-            };
+            var todoItem = item.ToTodoItem();
             _repository.Add(todoItem);
             return Ok(ToDoItemDTO.FromToDoItem(todoItem));
         }
