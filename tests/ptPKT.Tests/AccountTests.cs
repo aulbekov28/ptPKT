@@ -6,6 +6,7 @@ using ptPKT.WebUI.Models;
 using System;
 using System.Threading.Tasks;
 using ptPKT.Core.Entities.Identity;
+using ptPKT.Core.Exceptions.Indentity;
 using ptPKT.Core.Interfaces.Identity;
 using ptPKT.Core.Services.Identity;
 using Xunit;
@@ -42,7 +43,7 @@ namespace ptPKT.Tests
         }
 
         [Fact]
-        public async Task UserLogsIn_BadPassword_ReturnsBadRequestResult()
+        public void UserLogsIn_BadPassword_ThrowsException()
         {
             var user = new AppUserBuilder().WithWrongPassword().Build();
             var loginModel = new UserLoginModel()
@@ -53,12 +54,11 @@ namespace ptPKT.Tests
 
             var controller = new AuthController(_identityService);
 
-            var result = await controller.SignIn(loginModel);
-            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.ThrowsAsync<IncorrectCredentialsException>(() => controller.SignIn(loginModel));
         }
 
         [Fact]
-        public async Task UserLogsIn_NotRegistered_ReturnsBadRequestResult()
+        public void UserLogsIn_NotRegistered_ReturnsBadRequestResult()
         {
             var user = new AppUserBuilder().NotRegistered().Build();
             var loginModel = new UserLoginModel()
@@ -69,8 +69,10 @@ namespace ptPKT.Tests
 
             var controller = new AuthController(_identityService);
 
-            var result = await controller.SignIn(loginModel);
-            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.ThrowsAsync<UserNotFound>(() => controller.SignIn(loginModel));
+            
+            // var result = await controller.SignIn(loginModel);
+            // Assert.IsType<BadRequestObjectResult>(result);
         }
 
         [Fact]
