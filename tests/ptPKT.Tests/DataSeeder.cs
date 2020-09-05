@@ -33,9 +33,9 @@ namespace ptPKT.Tests
         {
             var fixture = new Fixture();
 
-            var ToDoItem1 = fixture.Create<ToDoItem>();
-            var ToDoItem2 = fixture.Create<ToDoItem>();
-            var ToDoItem3 = fixture.Create<ToDoItem>();
+            ToDoItem1 = fixture.Create<ToDoItem>();
+            ToDoItem2 = fixture.Create<ToDoItem>();
+            ToDoItem3 = fixture.Create<ToDoItem>();
             
             foreach (var item in dbContext.ToDoItems)
             {
@@ -48,5 +48,11 @@ namespace ptPKT.Tests
 
             dbContext.SaveChanges();
         }
+
+        public static ToDoItem ToDoItem3 { get; set; }
+
+        public static ToDoItem ToDoItem2 { get; set; }
+
+        public static ToDoItem ToDoItem1 { get; set; }
     }
 }
