@@ -28,6 +28,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppointmentScheduling.Core"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ptPKT.FunctionalTests", "..\tests\ptPKT.FunctionalTests\ptPKT.FunctionalTests.csproj", "{0D735937-86EC-419E-97D3-47F0C74B020D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ptPKT.ServiceCaller", "..\src\ptPKT.ServiceCaller\ptPKT.ServiceCaller.csproj", "{82381FEB-CC7C-4948-A198-12DBA0F955E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ptPKT.ServiceCallerTests", "ptPKT.ServiceCallerTests\ptPKT.ServiceCallerTests.csproj", "{2C492FA6-55CC-4980-B473-19AD78C6692B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +70,14 @@ Global
 		{0D735937-86EC-419E-97D3-47F0C74B020D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D735937-86EC-419E-97D3-47F0C74B020D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D735937-86EC-419E-97D3-47F0C74B020D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82381FEB-CC7C-4948-A198-12DBA0F955E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82381FEB-CC7C-4948-A198-12DBA0F955E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82381FEB-CC7C-4948-A198-12DBA0F955E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82381FEB-CC7C-4948-A198-12DBA0F955E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C492FA6-55CC-4980-B473-19AD78C6692B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C492FA6-55CC-4980-B473-19AD78C6692B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C492FA6-55CC-4980-B473-19AD78C6692B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C492FA6-55CC-4980-B473-19AD78C6692B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +87,7 @@ Global
 		{85507EC6-9138-4C77-81F4-A50DB895D7C5} = {C3DE30A8-22ED-492D-9331-63C25C61B3F1}
 		{4EC217DF-5B89-4FC5-A263-9FBA4DC9AA14} = {DF59A95D-706D-4001-8C07-1257A67BF78F}
 		{0D735937-86EC-419E-97D3-47F0C74B020D} = {C3DE30A8-22ED-492D-9331-63C25C61B3F1}
+		{2C492FA6-55CC-4980-B473-19AD78C6692B} = {C3DE30A8-22ED-492D-9331-63C25C61B3F1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B5D96A77-9F80-4DE6-9BAB-4DFB954E0C65}
